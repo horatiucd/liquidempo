@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+                      https://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.17.xsd">
+
+    <changeSet author="horatiucd" id="101">
+        <preConditions onFail="MARK_RAN">
+            <not>
+                <sequenceExists sequenceName="human_seq"/>
+            </not>
+        </preConditions>
+        <createSequence sequenceName="human_seq" startValue="1" incrementBy="1"/>
+    </changeSet>
+
+    <changeSet author="horatiucd" id="201">
+        <preConditions onFail="MARK_RAN">
+            <not>
+                <tableExists tableName="human"/>
+            </not>
+        </preConditions>
+        <createTable tableName="human">
+            <column name="id" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+
+    <changeSet author="horatiucd" id="301">
+        <preConditions onFail="MARK_RAN">
+            <not>
+                <primaryKeyExists primaryKeyName="human_pk" tableName="human"/>
+            </not>
+        </preConditions>
+        <addPrimaryKey columnNames="id" constraintName="human_pk" tableName="human"/>
+    </changeSet>
+
+</databaseChangeLog>
